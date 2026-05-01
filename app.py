@@ -4,15 +4,13 @@ import os
 
 app = Flask(__name__, static_folder='.', static_url_path='')
 
-BASE_DIR = os.path.dirname(os.path.realpath(__file__))
-
 def get_db():
     return mysql.connector.connect(
-        host='127.0.0.1',
-        port=3306,
-        database='instagram_like',
-        user='kesar',
-        password='1234'
+        host=os.environ.get('MYSQLHOST'),
+        port=int(os.environ.get('MYSQLPORT', 3306)),
+        database=os.environ.get('MYSQLDATABASE'),
+        user=os.environ.get('MYSQLUSER'),
+        password=os.environ.get('MYSQLPASSWORD')
     )
 
 @app.route('/')
