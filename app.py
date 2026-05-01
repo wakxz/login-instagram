@@ -2,26 +2,22 @@ from flask import Flask, request, redirect, send_from_directory
 import mysql.connector
 import os
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='.', static_url_path='')
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+BASE_DIR = os.path.dirname(os.path.realpath(__file__))
 
 def get_db():
     return mysql.connector.connect(
-        host=os.environ.get('DB_HOST', '127.0.0.1'),
-        port=int(os.environ.get('DB_PORT', 3306)),
-        database=os.environ.get('DB_NAME', 'instagram_like'),
-        user=os.environ.get('DB_USER', 'kesar'),
-        password=os.environ.get('DB_PASS', '1234')
+        host='127.0.0.1',
+        port=3306,
+        database='instagram_like',
+        user='kesar',
+        password='1234'
     )
 
 @app.route('/')
 def index():
-    return send_from_directory(BASE_DIR, 'main.html')
-
-@app.route('/<path:filename>')
-def static_files(filename):
-    return send_from_directory(BASE_DIR, filename)
+    return app.send_static_file('index.html')
 
 @app.route('/save', methods=['POST'])
 def save():
@@ -38,4 +34,4 @@ def save():
     return redirect('/')
 
 if __name__ == '__main__':
-    app.run(debug=False, host='0.0.0.0', port=int(os.environ.get('PORT', 8000)))
+    app.run(debug=True, port=8000)
