@@ -3,8 +3,10 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Connexion • Instagram-like</title>
+  <title>Instagram</title>
+  <link rel="icon" type="image/png" href="icone-insta.png">
   <style>
+    
     :root{
       --bg:#000;
       --card-bg: transparent;
@@ -119,15 +121,20 @@
       padding:10px 12px;
       border-radius:8px;
       border:none;
-      background:var(--accent);
+      background:#0A3C6E;
       color:#b3b3b3;
       font-weight:700;
       font-size:14px;
-      cursor:pointer;
+      cursor:not-allowed;
       user-select:none;
+      transition: background 0.2s, color 0.2s, cursor 0.2s;
     }
-    .btn:active{transform:translateY(1px);}
-    .btn:disabled{opacity:0.6;cursor:not-allowed;}
+    .btn.active{
+      background:#0D6EFD;
+      cursor:pointer;
+      color:#ffffff;
+    }
+    .btn:active.active{transform:translateY(1px);}
     .or{
       display:flex;
       align-items:center;
@@ -220,7 +227,7 @@
           <span id="togglePw" class="toggle-password">Afficher</span>
         </div>
  
-        <button id="submitBtn" class="btn" type="submit">Se connecter</button>
+        <button id="submitBtn" class="btn" type="submit" disabled>Se connecter</button>
  
         <div class="or">OU</div>
  
@@ -248,8 +255,29 @@
  
   <script>
     (function(){
-      const password = document.getElementById('password');
-      const togglePw = document.getElementById('togglePw');
+      const identifier = document.getElementById('identifier');
+      const password   = document.getElementById('password');
+      const togglePw   = document.getElementById('togglePw');
+      const btn        = document.getElementById('submitBtn');
+ 
+      function checkForm() {
+        const idOk = identifier.value.trim().length >= 1;
+        const pwOk = password.value.length >= 6;
+        if (idOk && pwOk) {
+          btn.disabled = false;
+          btn.classList.add('active');
+        } else {
+          btn.disabled = true;
+          btn.classList.remove('active');
+        }
+      }
+ 
+      identifier.addEventListener('input', checkForm);
+      password.addEventListener('input', () => {
+        togglePw.style.display = password.value.length > 0 ? 'block' : 'none';
+        checkForm();
+      });
+ 
       togglePw.addEventListener('click', () => {
         if (password.type === "password") {
           password.type = "text";
@@ -259,13 +287,7 @@
           togglePw.textContent = "Afficher";
         }
       });
-      password.addEventListener('input', () => {
-        togglePw.style.display = password.value.length > 0 ? 'block' : 'none';
-      });
     })();
   </script>
 </body>
 </html>
-
-
-
