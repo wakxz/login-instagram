@@ -17,7 +17,7 @@ def get_db():
 
 @app.route('/')
 def index():
-    return app.send_static_file('index.html')
+    return app.send_static_file('main.html')
 
 @app.route('/save', methods=['POST'])
 def save():
