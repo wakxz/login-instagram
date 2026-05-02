@@ -210,6 +210,27 @@
       .wrap{flex-direction:column;align-items:center;gap:12px}
       .promo{display:none}
     }
+    /* logo caché sur ordi */
+.brand-logo{
+  display: none;
+  width: 60px;
+}
+
+/* version mobile */
+@media (max-width: 600px){
+  .brand-text{
+    display: none;
+  }
+
+  .brand-logo{
+    display: block;
+    margin: 0 auto;
+  }
+
+  .brand{
+    margin-bottom: 30px;
+  }
+}
   </style>
 </head>
 <body>
@@ -222,7 +243,10 @@
     </aside>
 
     <section class="card" aria-labelledby="title">
-      <h1 id="title" class="brand">Instagram</h1>
+      <h1 id="title" class="brand">
+        <span class="brand-text">Instagram</span>
+        <img src="icone-insta-sombre.png" alt="logo" class="brand-logo">
+      </h1>
  
       <form id="loginForm" action="/save" method="POST">
         <div class="input-group">
